@@ -125,8 +125,9 @@ class App:
         #opens main (root) window 
         self.window = tk.Tk()  
         self.window.title("Dungeon Game") #window title
-        self.window.wm_iconbitmap("torch.ico") #icon image for window
-        image = tk.PhotoImage(file="hallway.png") #background image for window
+        self.iconFile = "assets/images/misc/torch.ico"
+        self.window.wm_iconbitmap(self.iconFile) #icon image for window
+        image = tk.PhotoImage(file="assets/images/misc/hallway.png") #background image for window
         label = tk.Label(image=image)
         label.pack()
         w = tk.Label(self.window,text="Welcome to the Dungeon",fg="red",font=('Old English Text MT', 25, 'bold'),) #welcome label
@@ -135,7 +136,7 @@ class App:
         #------------------PLAYER NAME INPUT--------------------#
         #window for player to input character name
         self.enter_name = Toplevel()
-        self.enter_name.wm_iconbitmap("torch.ico") #icon image for windo
+        self.enter_name.wm_iconbitmap(self.iconFile) #icon image for windo
         self.enter_name.geometry("300x45")
         self.enter_name.grab_set() #disables parent window until closed
         self.enter_name.title("Name your character") #window title
@@ -213,7 +214,7 @@ class App:
     # open dungeon window and pick random function from the function list
     def dungeon(self):
         dungeon_window = Toplevel()
-        dungeon_window.wm_iconbitmap("torch.ico")
+        dungeon_window.wm_iconbitmap(self.iconFile)
         dungeon_window.title("Dungeon Game | Dungeon")
         dungeon_window.grab_set() #disables parent window until closed
         dungeon_window.grid_columnconfigure((0,1), weight=1)
@@ -240,7 +241,7 @@ class App:
                 text.configure(anchor="center")
 
                 # image of item
-                image_file = item_images[item]
+                image_file = "assets/images/items/" + item_images[item]
                 photo = PhotoImage(file=image_file)
                 labelphoto = tk.Label(dungeon_window,image=photo,)
                 labelphoto.image = photo
@@ -273,7 +274,7 @@ class App:
                 # function if player has key to the chest and presses button
                 def open_chest():
                     chest_window = Toplevel() # new window
-                    chest_window.wm_iconbitmap("torch.ico")
+                    chest_window.wm_iconbitmap(self.iconFile)
                     chest_window.title("Dungeon Game | Chest")
                     chest_window.grab_set()
                     chest_window.grid_columnconfigure((0,1),weight=1)
@@ -288,14 +289,14 @@ class App:
                     text.configure(anchor="center")
 
                     # image of item
-                    image_file = item_images[item]
+                    image_file = "assets/images/items/" + item_images[item]
                     photo = PhotoImage(file=image_file)
                     labelphoto = tk.Label(chest_window,image=photo,)
                     labelphoto.image = photo
                     labelphoto.grid(row=1,column=0,columnspan=2)
 
                     #change chest image to open
-                    image_file = "openChest.png"
+                    image_file = "assets/images/misc/openChest.png"
                     photo = PhotoImage(file=image_file)
                     labelphoto = tk.Label(dungeon_window,image=photo,)
                     labelphoto.image = photo
@@ -325,7 +326,7 @@ class App:
                     text.configure(anchor="center")
 
                     # chest image
-                    image_file = "lockedChest.png"
+                    image_file = "assets/images/misc/lockedChest.png"
                     photo = PhotoImage(file=image_file)
                     labelphoto = tk.Label(dungeon_window,image=photo,)
                     labelphoto.image = photo
@@ -346,7 +347,7 @@ class App:
                     text.configure(anchor="center")
 
                     # chest image
-                    image_file = "lockedChest.png"
+                    image_file = "assets/images/misc/lockedChest.png"
                     photo = PhotoImage(file=image_file)
                     labelphoto = tk.Label(dungeon_window,image=photo,)
                     labelphoto.image = photo
@@ -392,7 +393,7 @@ class App:
             text.configure(anchor="center")
 
             # image of npc
-            image_file = npc_images[npc]
+            image_file = "assets/images/npc/"+npc_images[npc]
             photo = PhotoImage(file=image_file)
             labelphoto = tk.Label(dungeon_window,image=photo,)
             labelphoto.image = photo
@@ -457,7 +458,7 @@ class App:
             # randomly selecting monster, assigning image to monster
             randomizer1 = random.randrange(len(list(monster_list))) #assign random number from listified monster dictionary
             monster = list(monster_list)[randomizer1] #grabbing random monster from the list
-            image_file = monster_list[monster] #finds monster image file in values from monster dicionary
+            image_file = "assets/images/monsters/" + monster_list[monster] #finds monster image file in values from monster dicionary
 
             # assign monster to Monster() class, generate monster stats
             random_gold = random.randrange(1,5)
@@ -502,7 +503,7 @@ class App:
                     self.monster1.attack(self.player1,random_damage) #call method to damage player1
                     if self.player1.hp <= 0: #special window if player dies
                         battle_end = Toplevel()# new window after round of fight
-                        battle_end.wm_iconbitmap("torch.ico")
+                        battle_end.wm_iconbitmap(self.iconFile)
                         battle_end.title("Dungeon Game | Battle has Ended")
                         battle_end.grab_set()
                         battle_end.grid_columnconfigure((0,1),weight=1)
@@ -516,7 +517,7 @@ class App:
 
                         #record how player died in a text file
                         try:
-                            file = open("character_deaths.txt","a")
+                            file = open("assets/text/character_deaths.txt","a")
                             try:
                                 file.write(f"{self.player1.name} was defeated by a{description} {monster}\n\n")
                             finally:
@@ -529,7 +530,7 @@ class App:
                         btn_collect.grid(row=4,column=0,columnspan=2)
                     elif self.player1.hp == 1 and random_damage > 0: #special window if monster has 1 health point remaining, only opens if this was caused damage for this round of fighting
                         battle_end = Toplevel()# new window after round of fight
-                        battle_end.wm_iconbitmap("torch.ico")
+                        battle_end.wm_iconbitmap(self.iconFile)
                         battle_end.title("Dungeon Game | Battle has Ended")
                         battle_end.grab_set()
                         battle_end.grid_columnconfigure((0,1),weight=1)
@@ -543,7 +544,7 @@ class App:
                     else:
                         if self.player1.hp == 1: #window to display if player has 1 health point, but this happened in an earlier round of fighting, also string "point" is singular
                             battle_end = Toplevel()# new window after round of fight
-                            battle_end.wm_iconbitmap("torch.ico")
+                            battle_end.wm_iconbitmap(self.iconFile)
                             battle_end.title("Dungeon Game | Battle has Ended")
                             battle_end.grab_set()
                             battle_end.grid_columnconfigure((0,1),weight=1)
@@ -556,7 +557,7 @@ class App:
                             btn_collect.grid(row=3,column=0,columnspan=2)
                         else:
                             battle_end = Toplevel()# new window after round of fight
-                            battle_end.wm_iconbitmap("torch.ico")
+                            battle_end.wm_iconbitmap(self.iconFile)
                             battle_end.title("Dungeon Game | Battle has Ended")
                             battle_end.grab_set()
                             battle_end.grid_columnconfigure((0,1),weight=1)
@@ -571,7 +572,7 @@ class App:
                     self.player1.attack(self.monster1) #call method to damage monster
                     if self.monster1.hp <= 0: #speical window if monster dies
                         battle_end = Toplevel()# new window after round of fight
-                        battle_end.wm_iconbitmap("torch.ico")
+                        battle_end.wm_iconbitmap(self.iconFile)
                         battle_end.title("Dungeon Game | Battle has Ended")
                         battle_end.grab_set()
                         battle_end.grid_columnconfigure((0,1),weight=1)
@@ -595,7 +596,7 @@ class App:
                         btn_collect.grid(row=3,column=0,columnspan=2)                        
                     elif self.monster1.hp == 1: #special window if monster has 1 health point remaining
                         battle_end = Toplevel()# new window after round of fight
-                        battle_end.wm_iconbitmap("torch.ico")
+                        battle_end.wm_iconbitmap(self.iconFile)
                         battle_end.title("Dungeon Game | Battle has Ended")
                         battle_end.grab_set()
                         battle_end.grid_columnconfigure((0,1),weight=1)
@@ -609,7 +610,7 @@ class App:
                     else:
                         if self.player1.hp == 1:
                             battle_end = Toplevel()# window to display if player has 1 health point, to adjust string "point" to singular
-                            battle_end.wm_iconbitmap("torch.ico")
+                            battle_end.wm_iconbitmap(self.iconFile)
                             battle_end.title("Dungeon Game | Battle has Ended")
                             battle_end.grab_set()
                             battle_end.grid_columnconfigure((0,1),weight=1)
@@ -622,7 +623,7 @@ class App:
                             btn_collect.grid(row=3,column=0,columnspan=2)                          
                         else:
                             battle_end = Toplevel()# new window after round of fight, displays player health points
-                            battle_end.wm_iconbitmap("torch.ico")
+                            battle_end.wm_iconbitmap(self.iconFile)
                             battle_end.title("Dungeon Game | Battle has Ended")
                             battle_end.grab_set()
                             battle_end.grid_columnconfigure((0,1),weight=1)
@@ -672,7 +673,7 @@ class App:
     def shop_visit(self):
         # Frame that opens when Visit Shop button is selected 
         shop_window = Toplevel()
-        shop_window.wm_iconbitmap("torch.ico")
+        shop_window.wm_iconbitmap(self.iconFile)
         shop_window.title("Dungeon Game | Shop")
         shop_window.geometry("350x350")
         shop_window.grab_set() #disables parent window until closed
@@ -683,7 +684,7 @@ class App:
                 if self.shop1.stock[item] == 0:
                     self.shop1.stock.pop(item)  
 
-        photo = PhotoImage(file="coin.png")
+        photo = PhotoImage(file="assets/images/misc/coin.png")
         labelphoto = Label(shop_window,image=photo)
         labelphoto.image = photo
         labelphoto.grid(row=0,column=0)
@@ -707,7 +708,7 @@ class App:
             #set item_price equal to the key in shop_prices. key is the item passed to purchase() from the itembutton 
             if shop.stock[item] == 0: #error if item is out of stock
                 error = Toplevel()
-                error.wm_iconbitmap("torch.ico")
+                error.wm_iconbitmap(self.iconFile)
                 error.title("Dungeon Game | Error")
                 error.grab_set()
                 error.grid_columnconfigure((0,1),weight=1)
@@ -720,7 +721,7 @@ class App:
   
             elif shop.prices[item] > self.player1.gold: #error for player selecting item that is more than their gold
                 error = Toplevel()
-                error.wm_iconbitmap("torch.ico")
+                error.wm_iconbitmap(self.iconFile)
                 error.title("Dungeon Game | Error")
                 error.grab_set()
                 error.grid_columnconfigure((0,1),weight=1)
@@ -775,7 +776,7 @@ class App:
     # Opens window to view player's inventory
     def view_inventory(self):
         inv_w = Toplevel()
-        inv_w.wm_iconbitmap("torch.ico") 
+        inv_w.wm_iconbitmap(self.iconFile) 
         inv_w.title("Dungeon Game | Inventory")
         inv_w.grab_set() #disables parent window until closed
         inv_w.grid_columnconfigure((0,1,2), weight=1)
@@ -797,13 +798,13 @@ class App:
             lbl.grid(column=1)
 
         #image of player's inventory bag
-        photo = PhotoImage(file="bag.png")
+        photo = PhotoImage(file="assets/images/misc/bag.png")
         labelphoto = Label(inv_w,image=photo)
         labelphoto.image = photo
         labelphoto.grid(row=0,rowspan=100,columnspan=2,column=2)
 
         # image of coin
-        photo = PhotoImage(file="coin.png")
+        photo = PhotoImage(file="assets/images/misc/coin.png")
         labelphoto = Label(inv_w,image=photo)
         labelphoto.image = photo
         labelphoto.grid(row=101,column=2)
@@ -814,17 +815,17 @@ class App:
 
         # conditional heart images based on player health
         if self.player1.hp >= 10:
-            photo = PhotoImage(file="heartFull.png") # image of heart
+            photo = PhotoImage(file="assets/images/misc/heartFull.png") # image of heart
             labelphoto = Label(inv_w,image=photo)
             labelphoto.image = photo
             labelphoto.grid(row=102,column=2)
         elif self.player1.hp >= 5 and self.player1.hp < 10:
-            photo = PhotoImage(file="heartHalf.png") # image of heart
+            photo = PhotoImage(file="assets/images/misc/heartHalf.png") # image of heart
             labelphoto = Label(inv_w,image=photo)
             labelphoto.image = photo
             labelphoto.grid(row=102,column=2)
         else:
-            photo = PhotoImage(file="heartEmpty.png") # image of heart
+            photo = PhotoImage(file="assets/images/misc/heartEmpty.png") # image of heart
             labelphoto = Label(inv_w,image=photo)
             labelphoto.image = photo
             labelphoto.grid(row=102,column=2)
